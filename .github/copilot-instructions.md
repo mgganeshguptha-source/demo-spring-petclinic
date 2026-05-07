@@ -129,23 +129,3 @@ src/main/java/com/company/project/
 4. Spring Anti-Patterns - Circular dependencies between services
 
 You can extend this file with additional project-specific documentation guidance copied from the longer `.github/copilot-instructions-full stack.md` if you want Copilot to follow repository rules when authoring code.
-## Auto-detected Instructions (PR #1 - 2026-05-07)
-### Java package structure (additional)
-src/main/java/com/company/project/
-- aspect/  # AOP aspects for cross-cutting concerns (logging, metrics, security)
-
-### AOP / Aspects guidelines
-- Place aspects under the `aspect` package and annotate with `@Aspect` + a Spring stereotype (`@Component` or expose as a `@Bean`).
-- Prefer narrowly-scoped, named pointcuts (avoid overly-broad expressions like matching "..*Service.*" across unrelated packages).
-- Use `@Around` with `ProceedingJoinPoint` for timing/metrics; always call `proceed()` and rethrow exceptions unchanged.
-- Measure durations with System.nanoTime() (higher precision) or a StopWatch utility; log durations at an appropriate level.
-- Do not log sensitive data from join point arguments or return values.
-- Unit/integration-test aspects (verify advice runs, does not alter behavior, and respects pointcut scope).
-
-### Logging-aspect best practices
-- Use SLF4J Logger; prefer logging for the target class when helpful (e.g., LoggerFactory.getLogger(joinPoint.getSignature().getDeclaringTypeName())) for clearer source attribution.
-- Keep aspect methods small, well-documented, and side-effect free aside from logging/metrics.
-
-### Repository hygiene
-- Do not commit OS metadata files (e.g., desktop.ini). Add common OS metadata files to `.gitignore` and remove them from the repository history if present.
-
